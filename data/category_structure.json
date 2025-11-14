@@ -1,0 +1,34 @@
+{
+  "Cancer": [
+    "Glioblastoma & Glioma",
+    "Liver & Hepatocellular Carcinoma",
+    "Breast Cancer",
+    "Colorectal & Colon Cancer",
+    "Lung Cancer",
+    "Ovarian Cancer",
+    "Pancreatic Cancer",
+    "Melanoma",
+    "Prostate Cancer",
+    "Renal & Kidney Cancer",
+    "Other Cancer Types"
+  ],
+  "Metabolic Diseases": [
+    "Obesity",
+    "Diabetes",
+    "NAFLD/NASH",
+    "Metabolic Syndrome"
+  ],
+  "Cardiovascular": [
+    "Atherosclerosis",
+    "Cardiovascular Disease"
+  ],
+  "Neurodegenerative": [
+    "Alzheimer's Disease",
+    "Parkinson's Disease",
+    "Neurodegeneration"
+  ],
+  "Biological Processes": [
+    "Angiogenesis",
+    "Development"
+  ]
+}

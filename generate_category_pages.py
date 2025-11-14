@@ -147,8 +147,11 @@ for main_cat, subcats in structure.items():
 
         <!-- All Publications -->
         <div id="all-publications">
-            <h2>All Publications ({len(cat_pubs)})</h2>
-            <div id="publicationList"></div>
+            <h2>
+                All Publications
+                <span class="publication-count-badge">{len(cat_pubs)} papers</span>
+            </h2>
+            <div id="publicationList" class="publications-container"></div>
         </div>
     </div>
 
@@ -236,6 +239,44 @@ for main_cat, subcats in structure.items():
             return results;
         }};
 
+        // Override displaySearchResults to show/hide sections
+        const originalDisplayResults = displaySearchResults;
+        displaySearchResults = function(results) {{
+            const resultsSection = document.getElementById('results-section');
+            const allPublications = document.getElementById('all-publications');
+            const subcategorySummary = document.querySelector('.subcategory-summary');
+
+            if (results.length > 0 || document.getElementById('searchInput').value.length >= 2) {{
+                // Show search results, hide all publications
+                resultsSection.style.display = 'block';
+                allPublications.style.display = 'none';
+                subcategorySummary.style.display = 'none';
+            }} else {{
+                // Show all publications, hide search results
+                resultsSection.style.display = 'none';
+                allPublications.style.display = 'block';
+                subcategorySummary.style.display = 'block';
+            }}
+
+            originalDisplayResults(results);
+        }};
+
+        // Clear search function
+        window.clearSearch = function() {{
+            document.getElementById('searchInput').value = '';
+            document.getElementById('clearBtn').style.display = 'none';
+            document.getElementById('autocomplete-results').classList.remove('show');
+            document.getElementById('results-section').style.display = 'none';
+            document.getElementById('all-publications').style.display = 'block';
+            document.querySelector('.subcategory-summary').style.display = 'block';
+
+            // Reset filters
+            document.getElementById('reviewsOnly').checked = false;
+            document.getElementById('originalOnly').checked = false;
+            document.getElementById('subcategoryFilter').value = '';
+            document.getElementById('yearFilter').value = '';
+        }};
+
         // Load publications on page load
         document.addEventListener('DOMContentLoaded', () => {{
             loadCategoryPublications();
@@ -244,6 +285,24 @@ for main_cat, subcats in structure.items():
             const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('input', (e) => {{
                 document.getElementById('clearBtn').style.display = e.target.value ? 'block' : 'none';
+
+                // If search is cleared, show all publications
+                if (e.target.value === '') {{
+                    document.getElementById('results-section').style.display = 'none';
+                    document.getElementById('all-publications').style.display = 'block';
+                    document.querySelector('.subcategory-summary').style.display = 'block';
+                }}
+            }});
+
+            // Scroll to top when a publication is clicked
+            document.addEventListener('click', (e) => {{
+                if (e.target.closest('.paper-card')) {{
+                    // Smooth scroll to the clicked paper
+                    e.target.closest('.paper-card').scrollIntoView({{
+                        behavior: 'smooth',
+                        block: 'start'
+                    }});
+                }}
             }});
         }});
     </script>
